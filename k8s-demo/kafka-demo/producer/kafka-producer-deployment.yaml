@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-producer
+  namespace: kafka-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-producer
+  template:
+    metadata:
+      labels:
+        app: kafka-producer
+    spec:
+      containers:
+      - name: kafka-producer
+        image: confluentinc/cp-kafka:latest
+        command:
+        - sh
+        - -c
+        - >
+          i=0;
+          while true; do
+            echo "Message $i: Hello, World!";
+            echo "Message $i: Hello, World!" | kafka-console-producer --broker-list kafka-cluster-kafka-bootstrap:9092 --topic hello-world;
+            i=$((i+1));
+            sleep 10;
+          done

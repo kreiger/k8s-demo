@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
-  namespace: demo
+  name: wordpress
+  namespace: wordpress
 spec:
   ports:
-    - port: 3306
+    - port: 80
   selector:
-    app: mysql
+    app: wordpress
   type: NodePort

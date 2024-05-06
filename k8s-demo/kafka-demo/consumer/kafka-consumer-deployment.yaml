@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-consumer
+  namespace: kafka-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-consumer
+    spec:
+      containers:
+      - name: kafka-consumer
+        image: confluentinc/cp-kafka:latest
+        command:
+        - sh
+        - -c
+        - "exec kafka-console-consumer --bootstrap-server kafka-cluster-kafka-bootstrap:9092 --topic hello-world"
